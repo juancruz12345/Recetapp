@@ -1,0 +1,77 @@
+.ingredient-badge {
+    font-size: 0.9rem;
+    padding: 0.5rem 0.75rem;
+    margin: 0.25rem;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+    display: inline-block;
+  }
+  
+  .ingredient-badge.clickable {
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .ingredient-badge.clickable:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .ingredient-badge.clickable:active {
+    transform: translateY(0);
+  }
+  
+  /* Badge color enhancements */
+  .ingredient-badge.bg-success {
+    background-color: #28a745 !important;
+  }
+  
+  .ingredient-badge.bg-danger {
+    background-color: #dc3545 !important;
+  }
+  
+  .ingredient-badge.bg-warning {
+    background-color: #fd7e14 !important;
+    color: white;
+  }
+  
+  .ingredient-badge.bg-secondary {
+    background-color: #6c757d !important;
+  }
+  
+  /* Ripple effect */
+  .ingredient-badge.clickable::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%, -50%);
+    transform-origin: 50% 50%;
+  }
+  
+  .ingredient-badge.clickable:hover::after {
+    animation: ripple 1s ease-out;
+  }
+  
+  @keyframes ripple {
+    0% {
+      transform: scale(0, 0);
+      opacity: 0.5;
+    }
+    20% {
+      transform: scale(25, 25);
+      opacity: 0.3;
+    }
+    100% {
+      opacity: 0;
+      transform: scale(40, 40);
+    }
+  }
+  
+  
