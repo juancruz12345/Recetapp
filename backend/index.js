@@ -194,7 +194,7 @@ app.post('/guardar-receta', async(req,res)=>{
   
   const recetaArray = nuevaReceta.split('\n')
   const recetaNombreStr = recetaArray.filter((e)=>e.includes('Receta:')|| e.includes('Title:')||e.includes('Receta de ')||e.includes('Receta '))
-  const nombreReceta = recetaNombreStr.length>0 ? recetaNombreStr[0]?.replace('Receta: ', '').replace('Title: ', '').replace('Receta de ','') : recetaArray[2]
+  const nombreReceta = recetaNombreStr.length>0 ? recetaNombreStr[0]?.replace('Receta: ', '').replace('Title: ', '').replace('Receta de ','') : recetaArray[0]
   try {
 
     if (!user_id || !nuevaReceta) {
