@@ -24,6 +24,7 @@ app.use(cors({credentials: true ,
   
 app.use(express.json())
 app.use(cookieParser())
+const PORT = process.env.PORT || 3000;
 
 const db = createClient({
     url:process.env.DB_URL,
@@ -279,4 +280,4 @@ app.post('/logout', (req,res)=>{
     .json({message:'logout succesful'})
 })
 
-app.listen(3000, () => console.log("Servidor en http://localhost:3000"))
+app.listen(PORT, () => console.log("Servidor en http://localhost:3000"))
