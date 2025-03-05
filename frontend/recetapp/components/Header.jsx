@@ -52,7 +52,7 @@ export function Header() {
                   <span>{user?.username}</span>
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item as={Link} to="/perfil" onClick={handleNavCollapse}>
+                  <Dropdown.Item onClick={handleNavCollapse}>
                   <User size={18} /> 
                     Perfil
                   </Dropdown.Item>

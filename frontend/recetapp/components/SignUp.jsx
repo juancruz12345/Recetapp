@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { Button, Form, Spinner, Container, Card, Alert } from "react-bootstrap"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { User, Lock, UserPlus } from "./Icons.jsx"
 import "./AuthForms.css"
 
@@ -12,6 +12,7 @@ export function SignUp() {
   const [validated, setValidated] = useState(false)
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
+  const navigate = useNavigate
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -45,7 +46,11 @@ export function SignUp() {
 
       if (response.ok) {
         setSuccess(true)
-        setSpanTxt("Registro exitoso. Verifica tu correo electrónico para activar tu cuenta.")
+        setSpanTxt("Registro exitoso. Redirigiendo al login...")
+        setTimeout(() => {
+            navigate('/login')
+          }, 2000)
+
       } else {
         setSuccess(false)
         setSpanTxt(data.error || "Ocurrió un error inesperado.")

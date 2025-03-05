@@ -36,7 +36,7 @@ export function Home(){
   const mapedCarnesPorcinas = carnesPorcinas.map((e) => {
     return (e = { id: e, name: e, type: "Carne porcina" })
   })
-
+john
 
   const FetchData = async () => {
     setLoading(true)
@@ -96,7 +96,7 @@ export function Home(){
     let nuevaReceta = receta.receta
     setLoadingSave(true)
    try{
-    const response = await fetch("http://localhost:3000/guardar-receta",{
+    const response = await fetch("https://recetapp-8vna.onrender.com/guardar-receta",{
       method:'POST',
       headers: {
         "Content-Type": "application/json",
