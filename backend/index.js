@@ -162,7 +162,7 @@ app.post("/receta", async (req, res) => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                inputs: `Genera una receta con estos ingredientes: ${ingredientes.join(", ")}. La receta debe estar en español y debe comenzar desde el nombre de la receta. La receta debe tener una parte que diga el -Nivel de dificultad de la receta(facil,medio,dificil),-Ingredientes, -Cantidad de pasos de la receta, -Tiempo de coccion en total y -Porciones. Es importante que la receta no tenga errores gramaticales u ortograficos (revisala antes de darmela).`
+                inputs: `Genera una receta con estos ingredientes: ${ingredientes.join(", ")}. La receta debe estar en español y debe comenzar desde el nombre de la receta. La receta debe tener una parte que diga el -Nivel de dificultad de la receta(facil,medio,dificil),-Ingredientes(cada ingrediente debe estar listado con un guion), -Cantidad de pasos de la receta, -Tiempo de coccion en total y -Porciones. Las instrucciones deben tener el numero seguido de un punto al comenzar(porjemplo: 1.).`
             })
         })
 
@@ -192,7 +192,7 @@ app.post('/guardar-receta', async(req,res)=>{
   const {user_id, nuevaReceta} = req.body
   
   const recetaArray = nuevaReceta.split('\n')
-  const recetaNombreStr = recetaArray.filter((e)=>e.includes('Receta:')|| e.includes('Title:')||e.includes('Receta de '))
+  const recetaNombreStr = recetaArray.filter((e)=>e.includes('Receta:')|| e.includes('Title:')||e.includes('Receta de ')||e.includes('Receta '))
   const nombreReceta = recetaNombreStr.length>0 ? recetaNombreStr[0]?.replace('Receta: ', '').replace('Title: ', '').replace('Receta de ','') : recetaArray[2]
   try {
 
@@ -248,6 +248,27 @@ app.get('/recetas/:user_id', async(req,res)=>{
 
   }catch(e){
     res.status(400).json({ error: e.message }); 
+  }
+})
+
+
+
+app.delete('/recetas/:id', async(req,res)=>{
+
+  const {id} = req?.params
+  console.log(id)
+  if(!id){
+    throw new Error('El id de la receta es requerido')
+  }
+
+  try{
+
+    await db.execute("DELETE FROM recipe WHERE id = ?", [id])
+    res.json({ success: true, message: "receta eliminada correctamente" })
+
+  }catch(error){
+    console.error('Error al eliminar receta:', error)
+    res.status(500).json({ message: 'Error interno del servidor.' })
   }
 })
 

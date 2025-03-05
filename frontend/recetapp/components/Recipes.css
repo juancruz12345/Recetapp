@@ -114,7 +114,9 @@
   .difficulty-badge.difícil {
     background-color: #dc3545;
   }
-  
+  .recipe-card{
+    cursor: pointer;
+  }
   .recipe-card .card-body {
     padding: 1.25rem;
     display: flex;
@@ -133,6 +135,7 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     height: 2.6rem;
+    
   }
   
   .recipe-meta {

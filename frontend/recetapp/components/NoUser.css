@@ -1,0 +1,123 @@
+.no-user-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #f8f9fa;
+  }
+  
+  .no-user-header {
+    background: linear-gradient(135deg, #ff7e5f, #feb47b);
+    color: white;
+    padding: 0.5rem 0;
+    text-align: center;
+  }
+  
+  .logo-container {
+    margin-bottom: 1rem;
+  }
+  
+  .logo-image {
+    max-width: 120px;
+    height: auto;
+  }
+  
+  .app-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  
+  .tagline {
+    font-size: 1.2rem;
+    opacity: 0.9;
+  }
+  
+  .main-content {
+    flex: 1;
+    padding: 3rem 0;
+  }
+  
+  .welcome-card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  .welcome-card .card-title {
+    color: #4a6572;
+  }
+  
+  .welcome-card .card-title svg {
+    color: #ff7e5f;
+    margin-bottom: 1rem;
+  }
+  
+  .action-card {
+    height: 100%;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .action-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .action-card .card-title {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: #4a6572;
+  }
+  
+  .btn-primary {
+    background-color: #ff7e5f;
+    border-color: #ff7e5f;
+  }
+  
+  .btn-primary:hover,
+  .btn-primary:focus {
+    background-color: #ff6a45;
+    border-color: #ff6a45;
+  }
+  
+  .btn-outline-primary {
+    color: #ff7e5f;
+    border-color: #ff7e5f;
+  }
+  
+  .btn-outline-primary:hover,
+  .btn-outline-primary:focus {
+    background-color: #ff7e5f;
+    border-color: #ff7e5f;
+    color: white;
+  }
+  
+  .no-user-footer {
+    background-color: #4a6572;
+    color: white;
+    padding: 1rem 0;
+    text-align: center;
+  }
+  
+  @media (max-width: 768px) {
+    .no-user-header {
+      padding: 2rem 0;
+    }
+  
+    .app-title {
+      font-size: 2rem;
+    }
+  
+    .tagline {
+      font-size: 1rem;
+    }
+  
+    .main-content {
+      padding: 2rem 0;
+    }
+  }
+  
+  

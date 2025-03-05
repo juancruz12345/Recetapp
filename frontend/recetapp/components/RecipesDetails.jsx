@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Card, Container, Row, Col, Button, Badge, Breadcrumb } from "react-bootstrap"
+import { Card, Container, Row, Col, Button, Badge, Alert, Spinner } from "react-bootstrap"
 import { useLocation, useParams, useNavigate } from "react-router-dom"
 import {
   Cheff,
@@ -10,86 +10,63 @@ import {
   ArrowLeft,
   Star,
   Users,
-  Bookmark,
   Share,
-  Printer,
   ListCheck,
   ToolsKitchen,
   AlertCircle,
+  Xicon,
 } from "./Icons.jsx"
 import "./RecipesDetails.css"
 
 export function RecipesDetails() {
+
   const { id } = useParams()
   const location = useLocation()
   const navigate = useNavigate()
   const { recetas } = location.state || {}
   const [receta, setReceta] = useState(null)
-  const [ingredients, setIngredients] = useState([])
-  const [instructions, setInstructions] = useState([])
+  const [alert, setAlert] = useState(false)
+  
 
   useEffect(() => {
     if (recetas) {
       const foundRecipe = recetas.find((p) => p.id === Number.parseInt(id))
       setReceta(foundRecipe)
 
-      if (foundRecipe) {
-        // Extract ingredients and instructions from recipe text
-        // This is a simple parsing logic - in a real app, you'd have structured data
-        const recipeText = foundRecipe.recipe
-
-        // Extract ingredients (assuming they're listed with bullets or in a section)
-        const ingredientsMatch = recipeText.match(/Ingredientes:(.*?)(?=Instrucciones:|Preparación:|$)/s)
-        if (ingredientsMatch && ingredientsMatch[1]) {
-          // Split by lines or bullets and clean up
-          const ingredientsList = ingredientsMatch[1]
-            .split(/\n|•|-/)
-            .map((item) => item.trim())
-            .filter((item) => item.length > 0)
-          setIngredients(ingredientsList)
-        } else {
-          // Fallback: just create some random ingredients
-          setIngredients([
-            "2 cucharadas de aceite de oliva",
-            "1 cebolla picada",
-            "2 dientes de ajo picados",
-            "500g de carne molida",
-            "1 lata de tomates triturados",
-            "Sal y pimienta al gusto",
-            "Hierbas aromáticas",
-          ])
-        }
-
-        // Extract instructions
-        const instructionsMatch = recipeText.match(/(?:Instrucciones|Preparación|Pasos):(.*)/s)
-        if (instructionsMatch && instructionsMatch[1]) {
-          // Split by numbered steps or lines
-          const instructionsList = instructionsMatch[1]
-            .split(/\n|(?:\d+\.\s)/)
-            .map((item) => item.trim())
-            .filter((item) => item.length > 0)
-          setInstructions(instructionsList)
-        } else {
-          // Fallback: split the text into paragraphs
-          const paragraphs = recipeText
-            .split(/\n\n|\n/)
-            .map((item) => item.trim())
-            .filter((item) => item.length > 0)
-          setInstructions(paragraphs)
-        }
-      }
     }
+
   }, [recetas, id])
 
-  // Generate random recipe metadata
-  const cookingTime = Math.floor(Math.random() * 46) + 15 // 15-60 minutes
-  const difficulty = ["Fácil", "Media", "Difícil"][Math.floor(Math.random() * 3)]
-  const servings = Math.floor(Math.random() * 4) + 2 // 2-5 servings
-  const calories = Math.floor(Math.random() * 400) + 200 // 200-600 calories
-  const rating = (Math.random() * 2 + 3).toFixed(1) // 3.0-5.0 rating
 
   const handleGoBack = () => {
     navigate(-1)
+  }
+
+  const deleteRecipe = async()=>{
+    try{
+      const response = await fetch(`http://localhost:3000/recetas/${receta.id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        }
+        
+      })
+
+      const data = await response.json();
+      console.log(data)
+      if (!response.ok) {
+        throw new Error(data.message || "Error al eliminar receta");
+      }
+      setAlert(true)
+      setTimeout(() => {
+        setAlert(false)
+        handleGoBack()
+      }, 3000)
+
+
+    }catch(e){
+      console.error("Error:", e.message);
+    }
   }
 
   return (
@@ -107,36 +84,39 @@ export function RecipesDetails() {
               <Button variant="outline-secondary" className="action-button">
                 <Share size={18} /> Compartir
               </Button>
+              <Button onClick={deleteRecipe} variant="outline-danger" className="action-button">
+                <Xicon size={18} /> Eliminar
+              </Button>
              
             </div>
+            
           </div>
+          {
+            alert && (<Alert variant="info">
+              <Alert.Heading>¡Receta eliminada!</Alert.Heading>
+              <p>Seras redirigido</p>
+            </Alert>)
+          }
 
           <Card className="recipe-detail-card">
             <div className="recipe-hero">
               <div
                 className="recipe-image"
-                style={{
-                  backgroundImage: `url(https://source.unsplash.com/random/1200x800/?food,${receta.recipe_name})`,
-                }}
+               
               ></div>
               <div className="recipe-title-container">
-                <h1 className="recipe-title">{receta.recipe_name}</h1>
+                <h1 className="recipe-title">{receta?.name}</h1>
                 <div className="recipe-meta-badges">
-                  <Badge className={`difficulty-badge ${difficulty.toLowerCase()}`}>
-                    <Flame size={16} /> {difficulty}
+                  <Badge className={`difficulty-badge ${receta?.dificulty.toLowerCase()}`}>
+                    <Flame size={16} /> {receta?.dificulty}
                   </Badge>
                   <Badge className="time-badge">
-                    <Clock size={16} /> {cookingTime} min
+                    <Clock size={16} /> {receta?.coockingTime} min
                   </Badge>
                   <Badge className="servings-badge">
-                    <Users size={16} /> {servings} porciones
+                    <Users size={16} /> {receta?.portions}
                   </Badge>
-                  <Badge className="calories-badge">
-                    <Flame size={16} /> {calories} cal
-                  </Badge>
-                  <Badge className="rating-badge">
-                    <Star size={16} /> {rating}
-                  </Badge>
+                 
                 </div>
               </div>
             </div>
@@ -149,7 +129,7 @@ export function RecipesDetails() {
                       <ToolsKitchen size={22} /> Ingredientes
                     </h3>
                     <ul className="ingredients-list">
-                      {ingredients.map((ingredient, index) => (
+                      {receta?.ingredients?.map((ingredient, index) => (
                         <li key={index} className="ingredient-item">
                           {ingredient}
                         </li>
@@ -163,7 +143,7 @@ export function RecipesDetails() {
                       <ListCheck size={22} /> Instrucciones
                     </h3>
                     <ol className="instructions-list">
-                      {instructions.map((instruction, index) => (
+                      {receta?.instructions?.map((instruction, index) => (
                         <li key={index} className="instruction-item">
                           <div className="instruction-number">{index + 1}</div>
                           <div className="instruction-text">{instruction}</div>

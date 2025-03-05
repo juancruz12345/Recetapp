@@ -19,7 +19,7 @@ export function Ingredients(){
         'Quinoa',
         'Rábano','Repollo','Rúcula','Romero','Remolacha','Radicheta',
         'Soja','Sábila','Salvia',
-        'Tomillo',
+        'Tomillo','Tomate',
         'Verdeo',
         'Yuca',
         'Zanahoria','Zucchini','Zapallo'

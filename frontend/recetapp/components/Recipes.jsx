@@ -50,8 +50,23 @@ export default function Recipes() {
       }
 
       const data = await response.json()
-      setRecetas(data)
-      setFilteredRecetas(data)
+
+      const mapedRecipes = data?.map((e)=>{
+        return (e = {id:e.id,name:e.recipe_name.replaceAll('*',''),recipe:e.recipe,
+          dificulty:e.recipe.split('\n')?.filter(e=>e.includes('Nivel de dificultad') || e.includes('Dificultad')).toString().replaceAll('*','').replace('Nivel de ','').replace('dificultad: ','').replace('Dificultad: ','').replace('dificultad de la receta:','').replaceAll('-',''),
+          coockingTime:e.recipe.split('\n')?.filter(e=>e.includes('Cocción') || e.includes('Tiempo de cocción')|| e.includes('Tiempo de coccion')||e.includes('Coccion')).toString().match(/\d+/)[0],
+          instructions:e.recipe.match(/\d+\.\s*.+?(?=\n\d+\.\s|\n*$)/gs),
+          
+          ingredients:e.recipe?.split('\n').filter(line => (line.startsWith('-'))).join('\n').replaceAll('-','').split('\n'),
+          portions:e.recipe?.split('\n').filter(e=>e.includes('Porciones'))?.toString().replaceAll('*','').replaceAll('-','')
+          
+        })
+      })
+
+     
+
+      setRecetas(mapedRecipes)
+      setFilteredRecetas(mapedRecipes)
       
     } catch (e) {
       setErrMsg(e.message)
@@ -59,6 +74,8 @@ export default function Recipes() {
       setLoading(false)
     }
   }
+
+  
 
   useEffect(() => {
     fetchRecipes()
@@ -68,34 +85,13 @@ export default function Recipes() {
     if (searchTerm.trim() === "") {
       setFilteredRecetas(recetas)
     } else {
-      const filtered = recetas.filter((recipe) => recipe.recipe_name.toLowerCase().includes(searchTerm.toLowerCase()))
+      const filtered = recetas?.filter((recipe) => recipe.recipe_name.toLowerCase().replaceAll('*','').includes(searchTerm.toLowerCase()))
       setFilteredRecetas(filtered)
     }
   }, [searchTerm, recetas])
 
-  // Function to generate a random cooking time between 15-60 minutes
-  const getRandomTime = () => {
-    return Math.floor(Math.random() * 46) + 15
-  }
-
  
-  const mapedRecipes = recetas?.map((e)=>{
-    return (e = {id:e.id,name:e.recipe_name.replaceAll('*',''),recipe:e.recipe,
-      dificulty:e.recipe.split('\n')?.filter(e=>e.includes('Nivel de dificultad') || e.includes('Dificultad')).toString().replaceAll('*','').replace('Nivel de ',''),
-      coockingTime:e.recipe.split('\n')?.filter(e=>e.includes('Cocción') || e.includes('Tiempo de cocción')|| e.includes('Tiempo de coccion')||e.includes('Coccion')).toString().match(/\d+/)[0],
-
-
-
-    })
-  })
-
-
-  const recipeStrArray = recetas[0]?.recipe.split('\n')
-  const recipeDificulty = recipeStrArray?.filter(e=>e.includes('Nivel de dificultad') || e.includes('Dificultad')).toString().replaceAll('*','').replace('Nivel de dificultad: ','')
- /// recipeDificulty
-  const coocking = recipeStrArray?.filter(e=>e.includes('Cocción') || e.includes('Tiempo de cocción')|| e.includes('Tiempo de coccion')||e.includes('Coccion')).toString().match(/\d+/)[0];
-  console.log(mapedRecipes)
- // const recipeDificulty = 
+ console.log(filteredRecetas)
 
   return (
     <div>
@@ -142,29 +138,26 @@ export default function Recipes() {
         </div>
       ) : filteredRecetas.length > 0 ? (
         <Row xs={1} md={2} lg={3} className="g-4 recipes-grid">
-          {filteredRecetas.map((recipe, index) => {
-            const cookingTime = getRandomTime()
+          {filteredRecetas.map((recipe) => {
+            
             
 
             return (
-              <Col key={recipe.id}>
+              <Col key={recipe?.id}>
                 <Card className="recipe-card" onClick={() => goToRecipeDetail(recipe.id)}>
-                <Badge className={`difficulty-badge ${recipeDificulty.toLowerCase()}`}>{recipeDificulty}</Badge>
+                <Badge className={`difficulty-badge ${recipe?.dificulty.toLowerCase()}`}>{recipe?.dificulty}</Badge>
                   <Card.Body>
-                    <Card.Title className="recipe-title">{recipe.recipe_name}</Card.Title>
+                    <Card.Title className="recipe-title">{recipe?.name}</Card.Title>
                     <div className="recipe-meta">
                       <div className="meta-item">
                         <Clock size={18} />
-                        <span>{cookingTime} min</span>
+                        <span>{recipe?.coockingTime} min</span>
                       </div>
                       <div className="meta-item">
                         <Cheff size={18} />
-                        <span>{Math.floor(Math.random() * 3) + 2} pasos</span>
+                        <span>{recipe?.instructions.length} pasos</span>
                       </div>
-                      <div className="meta-item">
-                        <Star size={18} />
-                        <span>{(Math.random() * 2 + 3).toFixed(1)}</span>
-                      </div>
+                     
                     </div>
                     <div className="recipe-preview">{recipe.recipe.substring(0, 100)}...</div>
                     

@@ -1,0 +1,125 @@
+.app-header {
+    background: linear-gradient(135deg, #ff7e5f, #feb47b);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navbar-custom {
+   
+  }
+  
+  .navbar-custom .navbar-nav .nav-link {
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s ease, background-color 0.3s ease;
+    border-radius: 20px;
+  }
+  
+  .navbar-custom .navbar-nav .nav-link:hover,
+  .navbar-custom .navbar-nav .nav-link.active {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .navbar-custom .navbar-nav .nav-link svg {
+    margin-right: 0.5rem;
+    vertical-align: text-bottom;
+  }
+  
+  .brand {
+    display: flex;
+    align-items: center;
+    color: #ffffff !important;
+    font-weight: 700;
+    font-size: 1.5rem;
+    text-decoration: none;
+  }
+  
+  .brand img {
+    margin-right: 0.5rem;
+    
+   width: 5vw;
+   height: 10vh;
+  }
+  
+  .user-dropdown {
+    color: #ffffff !important;
+    background: none !important;
+    border: none !important;
+    padding: 0.5rem 1rem !important;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+  }
+  
+  .user-dropdown::after {
+    display: none;
+  }
+  
+  .user-dropdown svg {
+    margin-right: 0.5rem;
+  }
+  
+  .user-dropdown:hover,
+  .user-dropdown:focus {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 20px;
+  }
+  
+  .dropdown-menu {
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    color: #4a6572;
+    transition: background-color 0.3s ease;
+  }
+  
+  .dropdown-item svg {
+    margin-right: 0.75rem;
+    color: #ff7e5f;
+  }
+  
+  .dropdown-item:hover,
+  .dropdown-item:focus {
+    background-color: #f8f9fa;
+    color: #ff7e5f;
+  }
+  
+  .navbar-toggler {
+    border: none;
+    
+  }
+  
+  .navbar-toggler:focus {
+    box-shadow: none;
+  }
+  
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 0.8)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  }
+  
+  @media (max-width: 991.98px) {
+    .navbar-collapse {
+      background-color: #ff7e5f;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-top: 0.5rem;
+    }
+  
+    .navbar-nav {
+      gap: 0.5rem;
+    }
+  
+    .user-dropdown {
+      justify-content: flex-start;
+      width: 100%;
+    }
+  }
+  
+  

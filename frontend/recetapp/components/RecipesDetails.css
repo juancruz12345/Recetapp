@@ -55,9 +55,8 @@
   }
   
   .recipe-image {
-    height: 400px;
-    background-size: cover;
-    background-position: center;
+    height: 200px;
+    background: #4a6572;
     position: relative;
   }
   
@@ -68,7 +67,7 @@
     left: 0;
     right: 0;
     height: 50%;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+    
   }
   
   .recipe-title-container {

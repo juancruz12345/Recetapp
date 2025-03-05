@@ -1,6 +1,6 @@
 import { useState } from "react"
 import "bootstrap/dist/css/bootstrap.min.css"
-import { Button, Card, Form, Row, Col, Container, Spinner, Alert } from "react-bootstrap"
+import { Button, Card, Form, Row, Col, Container, Spinner, Alert, Image } from "react-bootstrap"
 import { Carrot, Meat, Cheese, Cheff, Xicon, Fridge, Cooker, Plus } from "./Icons.jsx"
 import { Ingredients } from "../services/ingredientes"
 import { Ingredient } from "./Ingredients.jsx"
@@ -9,6 +9,7 @@ import { Link } from "react-router-dom"
 import ToastComponent from "./ToastComponent.jsx"
 import { useUserContext } from "../context/UserContext.jsx"
 import { Header } from "./Header.jsx"
+import { NoUser } from "./NoUser.jsx"
 
 export function Home(){
 
@@ -315,31 +316,7 @@ export function Home(){
       
     </div>
 
-    : <div>
-        <header className="app-header">
-        <div className="logo">
-          <Cheff />
-          <h1>Mi Cocinero Virtual</h1>
-        </div>
-        <p className="tagline">Crea deliciosas recetas con los ingredientes que tienes a mano</p>
-      </header>
-      <div className="div-no-user">
-
-        <Card className="card-no-user">
-        <Card.Body>
-          <Card.Text className="card-no-user-text">
-          <span>Si tienes un usuario inicia sesion</span>
-          <Button variant="success"><Link className="link" to={'/login'}>Inicia sesion</Link></Button>
-          </Card.Text>
-          <Card.Text className="card-no-user-text">
-          <span>Si no, registrate</span>
-          <Button variant="success"><Link className="link" to={'/registro'}>Registrarse</Link></Button>
-          </Card.Text>
-        </Card.Body>
-        </Card>
-      </div>
-     
-    </div>
+    : <NoUser></NoUser>
     }
       </div>
     }
