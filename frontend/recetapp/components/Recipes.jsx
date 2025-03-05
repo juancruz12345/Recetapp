@@ -38,7 +38,7 @@ export default function Recipes() {
     setLoading(true)
 
     try {
-      const response = await fetch(`http://localhost:3000/recetas/${user.id}`, {
+      const response = await fetch(`https://recetapp-8vna.onrender.com/recetas/${user.id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

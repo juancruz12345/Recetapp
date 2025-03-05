@@ -41,7 +41,7 @@ export function Home(){
   const FetchData = async () => {
     setLoading(true)
     try {
-      const response = await fetch("http://localhost:3000/receta", {
+      const response = await fetch("https://recetapp-8vna.onrender.com/receta", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

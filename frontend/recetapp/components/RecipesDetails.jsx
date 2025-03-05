@@ -44,7 +44,7 @@ export function RecipesDetails() {
 
   const deleteRecipe = async()=>{
     try{
-      const response = await fetch(`http://localhost:3000/recetas/${receta.id}`, {
+      const response = await fetch(`https://recetapp-8vna.onrender.com/recetas/${receta.id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

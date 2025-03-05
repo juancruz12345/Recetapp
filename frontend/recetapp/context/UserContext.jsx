@@ -11,7 +11,7 @@ export function UserProvider({ children }) {
   const { data: user, error, isLoading } = useQuery({
     queryKey: ["user"],
     queryFn: async () => {
-      const response = await fetch("http://localhost:3000", { credentials: "include" });
+      const response = await fetch("https://recetapp-8vna.onrender.com", { credentials: "include" });
       if (!response.ok) throw new Error("Error al obtener el usuario");
       console.log('fetch cookies')
       return response.json();

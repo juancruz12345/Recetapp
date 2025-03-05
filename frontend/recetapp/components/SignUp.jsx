@@ -31,7 +31,7 @@ export function SignUp() {
     setValidated(true)
 
     try {
-      const response = await fetch("http://localhost:3000/register", {
+      const response = await fetch("https://recetapp-8vna.onrender.com/register", {
         method: "POST",
         credentials: "include",
         headers: {
