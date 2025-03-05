@@ -12,7 +12,7 @@ export function SignUp() {
   const [validated, setValidated] = useState(false)
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
-  const navigate = useNavigate
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
