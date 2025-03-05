@@ -36,7 +36,7 @@ export function Home(){
   const mapedCarnesPorcinas = carnesPorcinas.map((e) => {
     return (e = { id: e, name: e, type: "Carne porcina" })
   })
-john
+
 
   const FetchData = async () => {
     setLoading(true)
