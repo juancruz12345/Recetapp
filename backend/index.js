@@ -163,7 +163,7 @@ app.post("/receta", async (req, res) => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                inputs: `Genera una receta con estos ingredientes: ${ingredientes.join(", ")}. La receta debe estar en español y debe comenzar desde el nombre de la receta. La receta debe tener una parte que diga el -Nivel de dificultad de la receta(facil,medio,dificil),-Ingredientes(cada ingrediente debe estar listado con un guion), -Cantidad de pasos de la receta, -Tiempo de coccion en total y -Porciones. Las instrucciones deben tener el numero seguido de un punto al comenzar(porjemplo: 1.).`
+                inputs: `Genera una receta con estos ingredientes: ${ingredientes.join(", ")}. La receta debe estar en español y debe comenzar desde el nombre de la receta. La receta debe tener una parte que diga el -Nivel de dificultad de la receta(facil,medio,dificil),-Ingredientes(cada ingrediente debe estar listado con un guion), -Cantidad de pasos de la receta, -Tiempo de coccion en total y -Porciones. Las instrucciones deben tener el numero seguido de un punto al comenzar(porjemplo: 1.). No quiero que haya texto de más, limitate a darme la receta y filtra cualquier nombre de autor si la receta es de un post.`
             })
         })
 
@@ -280,4 +280,4 @@ app.post('/logout', (req,res)=>{
     .json({message:'logout succesful'})
 })
 
-app.listen(PORT, () => console.log("Servidor en http://localhost:3000"))
+app.listen(PORT, () => console.log(`Servidor en ${PORT}`))
