@@ -198,7 +198,7 @@ app.post('/register', async (req, res) => {
 app.post("/receta", async (req, res) => {
     const { ingredientes } = req.body;
 
-    const prompt = `Receta de cocina con estos ingredientes: ${ingredientes.join(", ")}. Debe tener el siguiente formato:-Nombre,-Ingredientes(listados con '-'),-Instrucciones,-Dificultad,-Porciones y -Tiempo de coccion. Quiero que la receta que no supere las 300 palabras(haz las instrucciones cortas si es necesario, pero trae toda la receta y los puntos señalados).`;
+    const prompt = `Receta de cocina con estos ingredientes: ${ingredientes.join(", ")}. Debe tener el siguiente formato:Nombre,Ingredientes(deben ser los unicos listados con '-'),Instrucciones,Dificultad,Porciones y Tiempo de coccion. Quiero que la receta que no supere las 300 palabras(haz las instrucciones cortas si es necesario, pero trae toda la receta y los puntos señalados).`;
     
     console.log("Ingredientes recibidos:", ingredientes)
 
