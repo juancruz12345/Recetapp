@@ -50,7 +50,7 @@ async function generarTexto(prompt) {
 
     const result = await model.generateContent({
       contents: [{ role: "user", parts: [{ text: prompt }] }],
-      generationConfig: { maxOutputTokens: 400 } // Controla el gasto de tokens
+      generationConfig: { maxOutputTokens: 500 } // Controla el gasto de tokens
     });
 
     apiKeys[currentKeyIndex].requests++;
@@ -198,7 +198,7 @@ app.post('/register', async (req, res) => {
 app.post("/receta", async (req, res) => {
     const { ingredientes } = req.body;
 
-    const prompt = `Receta de cocina con estos ingredientes: ${ingredientes.join(", ")}. Debe tener el siguiente formato:*Nombre,*Ingredientes(cada ingrediente listado con '-'),*Instrucciones,*Dificultad,*Porciones y *Tiempo de coccion. Quiero que la receta que no supere las 300 palabras(haz las instrucciones cortas si es necesario, pero trae toda la receta y los puntos señalados).`;
+    const prompt = `Receta de cocina con estos ingredientes: ${ingredientes.join(", ")}. Debe tener el siguiente formato:*Nombre,*Ingredientes(cada ingrediente listado con '-'),*Instrucciones,*Dificultad,*Porciones y *Tiempo de coccion. Quiero que traigas todos los puntos señalados y que la respuesta no supere las 375 palabras`;
     
     console.log("Ingredientes recibidos:", ingredientes)
 

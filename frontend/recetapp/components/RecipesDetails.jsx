@@ -16,6 +16,8 @@ import {
   Xicon,
 } from "./Icons.jsx"
 import "./RecipesDetails.css"
+import { useUserContext } from "../context/UserContext.jsx"
+import { NoUser } from "./NoUser.jsx"
 
 export function RecipesDetails() {
 
@@ -25,7 +27,7 @@ export function RecipesDetails() {
   const { recetas } = location.state || {}
   const [receta, setReceta] = useState(null)
   const [alert, setAlert] = useState(false)
-  
+  const {user} = useUserContext()
 
   useEffect(() => {
     if (recetas) {
@@ -69,7 +71,11 @@ export function RecipesDetails() {
   }
 
   return (
-    <Container className="recipe-details-container">
+   <div>
+    {
+      user!==null
+      ?
+      <Container className="recipe-details-container">
     
 
       {receta ? (
@@ -180,6 +186,10 @@ export function RecipesDetails() {
         </Card>
       )}
     </Container>
+
+    : <NoUser></NoUser>
+    }
+   </div>
   )
 }
 
