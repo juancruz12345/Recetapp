@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken'
 import cookieParser from 'cookie-parser';
 import { createClient } from '@libsql/client'
 import { UserRepository } from './user-repository.js';
-
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 
 dotenv.config()
@@ -30,6 +30,53 @@ const db = createClient({
     url:process.env.DB_URL,
     authToken: process.env.DB_TOKEN
 })
+
+const apiKeys = [
+  { key: process.env.GEMINI_API_KEY, requests: 0 },
+  { key: process.env.GEMINI_API_KEY_2, requests: 0 }
+];
+let currentKeyIndex = 0;
+
+
+function getApiKey() {
+  return apiKeys[currentKeyIndex].key;
+}
+
+
+async function generarTexto(prompt) {
+  try {
+    const genAI = new GoogleGenerativeAI(getApiKey());
+    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+
+    const result = await model.generateContent({
+      contents: [{ role: "user", parts: [{ text: prompt }] }],
+      generationConfig: { maxOutputTokens: 400 } // Controla el gasto de tokens
+    });
+
+    apiKeys[currentKeyIndex].requests++;
+    
+    return result.response.text();
+  } catch (error) {
+    console.error("Error en la solicitud:", error.message);
+
+    if (error.message.includes("429") || error.message.includes("Quota Exceeded")) {
+      console.warn("Límite alcanzado. Cambiando de API Key...");
+
+      // Cambiar a la siguiente API Key
+      currentKeyIndex = (currentKeyIndex + 1) % apiKeys.length;
+      console.log(`Nueva API Key en uso: ${currentKeyIndex + 1}`);
+
+      // Intentar nuevamente después de un breve tiempo
+      await new Promise(res => setTimeout(res, 5000));
+      return generarTexto(prompt);
+    }
+
+    throw error; // Relanzar error si no es un problema de cuota
+  }
+}
+
+
+
 
 
 
@@ -151,36 +198,20 @@ app.post('/register', async (req, res) => {
 app.post("/receta", async (req, res) => {
     const { ingredientes } = req.body;
 
+    const prompt = `Receta de cocina con estos ingredientes: ${ingredientes.join(", ")}. Debe tener el siguiente formato:-Nombre,-Ingredientes(listados con '-'),-Instrucciones,-Dificultad,-Porciones y -Tiempo de coccion. Quiero que la receta que no supere las 300 palabras(haz las instrucciones cortas si es necesario, pero trae toda la receta y los puntos señalados).`;
     
     console.log("Ingredientes recibidos:", ingredientes)
 
     try {
         
-        const response = await fetch("https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3", {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${process.env.HF_API_KEY}`,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                inputs: `Genera una receta con estos ingredientes: ${ingredientes.join(", ")}. La receta debe estar en español y debe comenzar desde el nombre de la receta. La receta debe tener una parte que diga el -Nivel de dificultad de la receta(facil,medio,dificil),-Ingredientes(cada ingrediente debe estar listado con un guion), -Cantidad de pasos de la receta, -Tiempo de coccion en total y -Porciones. Las instrucciones deben tener el numero seguido de un punto al comenzar(porjemplo: 1.). No quiero que haya texto de más, limitate a darme la receta y filtra cualquier nombre de autor si la receta es de un post.`
-            })
-        })
-
-       
-        if (!response.ok) {
-            throw new Error(`Error en Hugging Face: ${response.statusText}`)
-        }
-
-        const data = await response.json()
-
-        const dataArray=data[0].generated_text.split('\n')
-        dataArray.shift()
-        const dataString = dataArray.join('\n')
-        dataString.replace('*','')
-        
-
-        res.json({ receta: dataString})
+       const response =await generarTexto(prompt)
+      const stringArray = response.split('\n')
+       if(stringArray[0].startsWith('¡Claro!') || stringArray[0].startsWith('¡Aquí tienes') || stringArray[0].startsWith('¡Absolutamente') || stringArray[0].startsWith('¡Porsupuesto') || stringArray[0].startsWith('¡Muy bien')){
+        stringArray.shift()
+       }
+       const receta = stringArray.join('\n').replaceAll('*','')
+      
+        res.json({receta})
     } catch (error) {
        
         console.error("Error generando receta:", error)
@@ -191,10 +222,13 @@ app.post("/receta", async (req, res) => {
 app.post('/guardar-receta', async(req,res)=>{
 
   const {user_id, nuevaReceta} = req.body
-  
+  console.log(nuevaReceta)
   const recetaArray = nuevaReceta.split('\n')
-  const recetaNombreStr = recetaArray.filter((e)=>e.includes('Receta:')|| e.includes('Title:')||e.includes('Receta de ')||e.includes('Receta '))
-  const nombreReceta = recetaNombreStr.length>0 ? recetaNombreStr[0]?.replace('Receta: ', '').replace('Title: ', '').replace('Receta de ','') : recetaArray[0]
+  console.log(recetaArray[0])
+  const nombreReceta = recetaArray[0] !== '' ? recetaArray[0].replace('Nombre: ', '') : recetaArray[1].replace('Nombre: ', '')
+  
+
+  
   try {
 
     if (!user_id || !nuevaReceta) {
@@ -281,3 +315,30 @@ app.post('/logout', (req,res)=>{
 })
 
 app.listen(PORT, () => console.log(`Servidor en ${PORT}`))
+
+
+/**ç
+ *  const response = await fetch("https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.3", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${process.env.HF_API_KEY}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                inputs: `Genera una receta con estos ingredientes: ${ingredientes.join(", ")}. La receta debe estar en español y debe tener la siguiente estructura: -Nombre de la receta, -Nivel de dificultad de la receta(facil,medio,dificil),-Ingredientes(cada ingrediente debe estar listado con un guion), -Cantidad de pasos de la receta, -Tiempo de coccion en total, -Porciones y -Instrucciones. Las instrucciones deben tener el numero seguido de un punto al comenzar(porjemplo: 1.). No quiero que haya texto de más, limitate a darme la receta y filtra cualquier nombre de autor si la receta es de un post.`
+            })
+        })
+
+       
+        if (!response.ok) {
+            throw new Error(`Error en Hugging Face: ${response.statusText}`)
+        }
+
+        const data = await response.json()
+
+        const dataArray=data[0].generated_text.split('\n')
+        dataArray.shift()
+        const dataString = dataArray.join('\n')
+        dataString.replace('*','')
+        
+ */

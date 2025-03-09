@@ -38,6 +38,12 @@ export function Home(){
   })
 
 
+  
+ 
+  console.log(JSON.stringify(receta).split(''))
+
+
+
   const FetchData = async () => {
     setLoading(true)
     try {
@@ -57,6 +63,8 @@ export function Home(){
       })
      
       const data = await response.json()
+  
+      console.log(data)
       setReceta(data)
       setLoading(false)
     } catch (error) {

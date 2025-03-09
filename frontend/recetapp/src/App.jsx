@@ -17,7 +17,7 @@ function App() {
       <Route path="/recetas/:id" element={<RecipesDetails/>}></Route>
      </Routes>
       <footer className="app-footer">
-        <p>© {new Date().getFullYear()} Mi Cocinero Virtual - Todas las recetas son generadas con IA</p>
+        <p>© {new Date().getFullYear()} Recetapp - Todas las recetas son generadas con IA</p>
       </footer>
     </div>
    

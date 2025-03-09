@@ -9,9 +9,9 @@ export function NoUser() {
       <header className="no-user-header">
         <Container>
           <div className="logo-container">
-            <Image src="./Diseño sin título(2)-Photoroom(1).png" alt="Recetapp Logo" className="logo-image" />
+            <Image roundedCircle src="./Diseño sin título(2)-Photoroom(1).png" alt="Recetapp Logo" className="logo-image" />
           </div>
-          <h1 className="app-title">Recetapp</h1>
+          
           <p className="tagline">Crea deliciosas recetas con los ingredientes que tienes a mano</p>
         </Container>
       </header>

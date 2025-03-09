@@ -1,14 +1,13 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Card, Container, Row, Col, Button, Badge, Alert, Spinner } from "react-bootstrap"
+import { Card, Container, Row, Col, Button, Badge, Alert } from "react-bootstrap"
 import { useLocation, useParams, useNavigate } from "react-router-dom"
 import {
   Cheff,
   Clock,
   Flame,
   ArrowLeft,
-  Star,
   Users,
   Share,
   ListCheck,
@@ -111,7 +110,7 @@ export function RecipesDetails() {
                     <Flame size={16} /> {receta?.dificulty}
                   </Badge>
                   <Badge className="time-badge">
-                    <Clock size={16} /> {receta?.coockingTime} min
+                    <Clock size={16} /> {receta?.coockingTime}
                   </Badge>
                   <Badge className="servings-badge">
                     <Users size={16} /> {receta?.portions}

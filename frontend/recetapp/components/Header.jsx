@@ -22,6 +22,7 @@ export function Header() {
         <Container>
           <Navbar.Brand as={Link} to="/" className="brand">
             <Image src="./Diseño sin título(2)-Photoroom(1).png" roundedCircle></Image>
+            
            
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" onClick={() => setExpanded(!expanded)} />

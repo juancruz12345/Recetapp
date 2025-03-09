@@ -9,8 +9,6 @@ import {
   Clock,
   Search,
   Cheff,
-  Star,
-  ArrowRight,
   MoodSad,
 } from "./Icons.jsx"
 import "./Recipes.css"
@@ -36,7 +34,7 @@ export default function Recipes() {
     }
 
     setLoading(true)
-
+    console.log('fetch recipes')
     try {
       const response = await fetch(`https://recetapp-8vna.onrender.com/recetas/${user.id}`, {
         method: "GET",
@@ -50,15 +48,16 @@ export default function Recipes() {
       }
 
       const data = await response.json()
+      
 
       const mapedRecipes = data?.map((e)=>{
-        return (e = {id:e.id,name:e.recipe_name.replaceAll('*',''),recipe:e.recipe,
-          dificulty:e.recipe.split('\n')?.filter(e=>e.includes('Nivel de dificultad') || e.includes('Dificultad')).toString().replaceAll('*','').replace('Nivel de ','').replace('dificultad: ','').replace('Dificultad: ','').replace('dificultad de la receta:','').replaceAll('-',''),
-          coockingTime:e.recipe.split('\n')?.filter(e=>e.includes('Cocción') || e.includes('Tiempo de cocción')|| e.includes('Tiempo de coccion')||e.includes('Coccion')).toString().match(/\d+/)[0],
-          instructions:e.recipe.match(/\d+\.\s*.+?(?=\n\d+\.\s|\n*$)/gs),
+        return (e = {id:e.id,name:e?.recipe_name,recipe:e?.recipe,
+          dificulty:e?.recipe.split('\n')?.filter(e=>e.includes('Nivel de dificultad') || e.includes('Dificultad')).toString().replaceAll('*','').replace('Nivel de ','').replace('dificultad: ','').replace('Dificultad: ',''),
+          coockingTime:e?.recipe.split('\n')?.filter(e=>e.includes('Cocción') || e.includes('Tiempo de cocción')|| e.includes('Tiempo de coccion')||e.includes('Coccion'))[0].replace('Tiempo de cocción: ',''),
+          instructions:e?.recipe.match(/\d+\.\s*.+?(?=\n\d+\.\s|\n*$)/gs),
           
-          ingredients:e.recipe?.split('\n').filter(line => line.trimStart().startsWith('-')).join('\n').replaceAll('-','').split('\n'),
-          portions:e.recipe?.split('\n').filter(e=>e.includes('Porciones'))?.toString().replaceAll('*','').replaceAll('-','')
+          ingredients:e?.recipe?.split('\n').filter(line => line.trimStart().startsWith('-')).join('\n').replaceAll('-','').split('\n'),
+          portions:e?.recipe?.split('\n').filter(e=>e.includes('Porciones'))?.toString().replaceAll('*','').replaceAll('-','')
           
         })
       })
@@ -89,9 +88,6 @@ export default function Recipes() {
       setFilteredRecetas(filtered)
     }
   }, [searchTerm, recetas])
-
- 
- console.log(filteredRecetas)
 
   return (
     <div>
@@ -145,13 +141,13 @@ export default function Recipes() {
             return (
               <Col key={recipe?.id}>
                 <Card className="recipe-card" onClick={() => goToRecipeDetail(recipe.id)}>
-                <Badge className={`difficulty-badge ${recipe?.dificulty.toLowerCase()}`}>{recipe?.dificulty}</Badge>
+               <Badge className={`difficulty-badge ${recipe?.dificulty.toLowerCase()}`}>{recipe?.dificulty}</Badge>
                   <Card.Body>
                     <Card.Title className="recipe-title">{recipe?.name}</Card.Title>
                     <div className="recipe-meta">
                       <div className="meta-item">
                         <Clock size={18} />
-                        <span>{recipe?.coockingTime} min</span>
+                        <span>{recipe?.coockingTime}</span>
                       </div>
                       <div className="meta-item">
                         <Cheff size={18} />
@@ -162,6 +158,7 @@ export default function Recipes() {
                     <div className="recipe-preview">{recipe.recipe.substring(0, 100)}...</div>
                     
                   </Card.Body>
+             
                 </Card>
               </Col>
             )

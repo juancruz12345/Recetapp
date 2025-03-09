@@ -10,6 +10,7 @@
     color: white;
     padding: 0.5rem 0;
     text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   }
   
   .logo-container {
@@ -19,6 +20,7 @@
   .logo-image {
     max-width: 120px;
     height: auto;
+    background: #814222;
   }
   
   .app-title {
@@ -30,6 +32,7 @@
   .tagline {
     font-size: 1.2rem;
     opacity: 0.9;
+    font-style: italic;
   }
   
   .main-content {
@@ -58,13 +61,9 @@
     border: none;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    
   }
-  
-  .action-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
+ 
   
   .action-card .card-title {
     font-size: 1.1rem;
