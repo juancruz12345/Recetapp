@@ -5,6 +5,7 @@ import { Login } from "../components/Login"
 import { SignUp } from "../components/SignUp"
 import Recipes from "../components/Recipes"
 import { RecipesDetails } from "../components/RecipesDetails"
+import { VerifyAccount } from "../components/VerifyAccount"
 
 function App() {
  return(
@@ -15,6 +16,7 @@ function App() {
       <Route path="/registro" element={<SignUp/>}></Route>
       <Route path="/recetas" element={<Recipes/>}></Route>
       <Route path="/recetas/:id" element={<RecipesDetails/>}></Route>
+      <Route path="/verificar-cuenta/:email" element={<VerifyAccount/>}></Route>
      </Routes>
       <footer className="app-footer">
         <p>© {new Date().getFullYear()} Recetapp - Todas las recetas son generadas con IA</p>

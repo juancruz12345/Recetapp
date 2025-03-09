@@ -5,15 +5,18 @@ import { Carrot, Meat, Cheese, Cheff, Xicon, Fridge, Cooker, Plus } from "./Icon
 import { Ingredients } from "../services/ingredientes"
 import { Ingredient } from "./Ingredients.jsx"
 import "./Home.css"
-import { Link } from "react-router-dom"
+
 import ToastComponent from "./ToastComponent.jsx"
 import { useUserContext } from "../context/UserContext.jsx"
 import { Header } from "./Header.jsx"
 import { NoUser } from "./NoUser.jsx"
 
+
 export function Home(){
 
   const {user,isLoading} = useUserContext()
+
+  
   
 
 
@@ -37,7 +40,7 @@ export function Home(){
     return (e = { id: e, name: e, type: "Carne porcina" })
   })
 
-
+  
 
   const FetchData = async () => {
     setLoading(true)

@@ -18,7 +18,7 @@ const db = createClient({
 
 export class UserRepository{
 
-  static async create({username,password}){
+  static async create({username,password, email}){
 
     Validation.username(username)
     Validation.password(password)
@@ -31,9 +31,19 @@ export class UserRepository{
       sql:'SELECT * FROM users WHERE username = :username',
       args: {username}
    })
+
+   const emailExist = await db.execute({
+    sql:'SELECT * FROM users WHERE email = :email',
+    args: {email}
+ })
    if(userExist.rows.length>0){
-    
+   
     throw new Error('Ya existe ese nombre de usuario.')
+   }
+   
+   if(emailExist.rows.length>0){
+    
+    throw new Error('Ya existe un usuario con ese email.')
    }
    if(password.length<6){
     
@@ -41,8 +51,8 @@ export class UserRepository{
    }
    
         const user = await db.execute({
-          sql: 'INSERT INTO users (username, password) VALUES (:username, :hashedPassword)',
-          args: {username, hashedPassword}
+          sql: 'INSERT INTO users (username, password, email) VALUES (:username, :hashedPassword, :email)',
+          args: {username, hashedPassword,email}
         })
         
         return user.lastInsertRowid.toString()
@@ -66,9 +76,9 @@ export class UserRepository{
       const isValid = await bcryptjs.compare(password, user.rows[0].password)
       if(!isValid) throw new Error('La contraseña es incorrecta')
         
-      /*if(user.rows[0].verificado!==1){
-        throw new Error('The user is not verified')
-      }*/
+      if(user.rows[0].verificado!==1){
+        throw new Error('El usuario no esta verificado')
+      }
 
       const {password: _, ...publicUser} = user.rows[0]
       return publicUser

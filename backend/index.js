@@ -7,6 +7,7 @@ import cookieParser from 'cookie-parser';
 import { createClient } from '@libsql/client'
 import { UserRepository } from './user-repository.js';
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { Resend } from "resend";
 
 
 dotenv.config()
@@ -30,6 +31,8 @@ const db = createClient({
     url:process.env.DB_URL,
     authToken: process.env.DB_TOKEN
 })
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const apiKeys = [
   { key: process.env.GEMINI_API_KEY, requests: 0 },
@@ -135,6 +138,24 @@ app.use((req, res, next) => {
   
 
 
+  app.post("/send-email", async (req, res) => {
+      try {
+        const { to, subject, message } = req.body;
+    
+        const emailData = {
+          from: "onboarding@resend.dev", 
+          to,
+          subject,
+          html: `<p>${message}</p>`,
+        };
+    
+        const result = await resend.emails.send(emailData);
+        res.json({ success: true, data: result });
+      } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+      }
+    });
+
 ///USER///////////////////
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
@@ -186,6 +207,18 @@ app.post('/register', async (req, res) => {
      
   } catch (e) {
     res.status(400).json({ error: e.message }); 
+  }
+});
+
+app.get("/verify/:email", async (req, res) => {
+  const { email } = req.params;
+
+  try {
+      await db.execute("UPDATE users SET verificado = 1 WHERE email = ?", [email]);
+      res.json({ success: true, message: "Usuario verificado correctamente" });
+  } catch (error) {
+      console.error("Error al verificar el usuario:", error);
+      res.status(500).json({ success: false, error: "Error en el servidor" });
   }
 });
 

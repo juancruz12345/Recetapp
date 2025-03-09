@@ -1,0 +1,24 @@
+
+
+.div-verify{
+
+    width: 100%;
+    display: flex;
+    padding-top: 30vh;
+    padding-bottom: 20vh;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+}
+.div-verify-card{
+
+    padding: 2rem;
+    width: fit-content;
+    .btn{
+        display: flex;
+        margin: 0 auto;
+        
+    }
+
+}

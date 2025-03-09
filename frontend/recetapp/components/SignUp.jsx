@@ -13,6 +13,32 @@ export function SignUp() {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const navigate = useNavigate()
+  const [emailResponse, setEmailResponse] = useState(null);
+
+
+
+
+  const handleSendEmail = async (email,subject,message) => {
+    
+    setLoading(true);
+
+    try {
+      const res = await fetch("https://recetapp-8vna.onrender.com/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ to: email, subject, message }),
+      });
+
+      const data = await res.json();
+      setEmailResponse(data.success ? "Correo enviado con éxito" : "Error al enviar");
+    } catch (e) {
+      setEmailResponse("Error al enviar el correo");
+      setSpanTxt(e.message)
+    } finally {
+      setLoading(false);
+    }
+  };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -20,6 +46,7 @@ export function SignUp() {
 
     const username = e.currentTarget.username.value
     const password = e.currentTarget.password.value
+    const email = e.currentTarget.email.value
     const form = e.currentTarget
 
     if (form.checkValidity() === false) {
@@ -30,7 +57,7 @@ export function SignUp() {
     }
 
     setValidated(true)
-
+    
     try {
       const response = await fetch("https://recetapp-8vna.onrender.com/register", {
         method: "POST",
@@ -38,7 +65,7 @@ export function SignUp() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username, password, email }),
       })
 
       const data = await response.json()
@@ -46,17 +73,18 @@ export function SignUp() {
 
       if (response.ok) {
         setSuccess(true)
-        setSpanTxt("Registro exitoso. Redirigiendo al login...")
-        setTimeout(() => {
-            navigate('/login')
-          }, 2000)
+        
+
+        handleSendEmail(email, 'Verificar cuenta Recetapp',`Haga click en el siguiente enlace para verificar su cuenta: https://recetapp-8vna.onrender.com/verificar-cuenta/${email}`)
+        setSpanTxt("¡Registro exitoso! Verifique su casilla de email.")
+
 
       } else {
         setSuccess(false)
         setSpanTxt(data.error || "Ocurrió un error inesperado.")
         setTimeout(() => {
           setHidden(true)
-        }, 2000)
+        }, 6000)
       }
     } catch (error) {
       setSpanTxt("La solicitud falló. Por favor, intenta nuevamente.")
@@ -65,12 +93,30 @@ export function SignUp() {
     }
   }
 
+
+
   return (
     <Container className="auth-container">
       <Card className="auth-card">
         <Card.Body>
           <h2 className="text-center mb-4">Registro</h2>
           <Form noValidate validated={validated} onSubmit={handleSubmit}>
+          <Form.Group className="mb-3">
+              <Form.Label>Email</Form.Label>
+              <div className="input-icon-wrapper">
+                <User className="input-icon" />
+                <Form.Control
+                  type="email"
+                  name="email"
+                  required
+                  minLength={6}
+                  placeholder="Escribe tu email"
+                />
+              </div>
+              <Form.Control.Feedback type="invalid">
+                Debes escribir un email válido.
+              </Form.Control.Feedback>
+            </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Nombre de usuario</Form.Label>
               <div className="input-icon-wrapper">

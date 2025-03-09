@@ -56,7 +56,7 @@ export function Login() {
         setSpanTxt(data.error || "Ocurrió un error.")
         setTimeout(() => {
           setHidden(true)
-        }, 2000)
+        }, 8000)
       }
     } catch (error) {
       setSpanTxt("Hubo un error. Intenta nuevamente")
