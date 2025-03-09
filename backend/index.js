@@ -50,7 +50,7 @@ async function generarTexto(prompt) {
 
     const result = await model.generateContent({
       contents: [{ role: "user", parts: [{ text: prompt }] }],
-      generationConfig: { maxOutputTokens: 500 } // Controla el gasto de tokens
+      generationConfig: { maxOutputTokens: 400 } // Controla el gasto de tokens
     });
 
     apiKeys[currentKeyIndex].requests++;
@@ -198,7 +198,7 @@ app.post('/register', async (req, res) => {
 app.post("/receta", async (req, res) => {
     const { ingredientes } = req.body;
 
-    const prompt = `Receta de cocina con estos ingredientes: ${ingredientes.join(", ")}. Debe tener el siguiente formato:*Nombre,*Ingredientes(cada ingrediente listado con '-'),*Instrucciones,*Dificultad,*Porciones y *Tiempo de coccion. Quiero que traigas todos los puntos señalados y que la respuesta no supere las 375 palabras`;
+    const prompt = `Receta de cocina con estos ingredientes: ${ingredientes.join(", ")}. Debe tener el siguiente formato:*Nombre,*Ingredientes(cada ingrediente listado con '-'),*Instrucciones,*Dificultad,*Porciones y *Tiempo de coccion. Quiero que traigas todos los puntos señalados y que la respuesta no supere las 300 palabras`;
     
     console.log("Ingredientes recibidos:", ingredientes)
 
@@ -206,7 +206,7 @@ app.post("/receta", async (req, res) => {
         
        const response =await generarTexto(prompt)
       const stringArray = response.split('\n')
-       if(stringArray[0].startsWith('¡Claro!') || stringArray[0].startsWith('¡Aquí tienes') || stringArray[0].startsWith('¡Absolutamente') || stringArray[0].startsWith('¡Porsupuesto') || stringArray[0].startsWith('¡Muy bien')){
+       if(stringArray[0].startsWith('¡Claro!') || stringArray[0].startsWith('¡Aquí tienes') ||stringArray[0].startsWith('Aquí tienes')|| stringArray[0].startsWith('¡Absolutamente') || stringArray[0].startsWith('¡Porsupuesto') || stringArray[0].startsWith('¡Muy bien')){
         stringArray.shift()
        }
        const receta = stringArray.join('\n').replaceAll('*','')
