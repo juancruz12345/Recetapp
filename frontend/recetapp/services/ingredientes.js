@@ -40,5 +40,19 @@ export function Ingredients(){
        'Jamon','Peceto','Paleta','Pechito','Panceta','Tocino','Solomillo'
     ]
 
-    return{vegetales, carnesBovinas, carnesPorcinas}
+    const pescados = [
+        'Almeja', 'Anguila', 'Angula','Atún','Bacaladilla','Bacalao','Berberecho','Besugo','Bígaro','Bogavante',
+        'Bonito','Boquerón','Breca','Brótola','Cabaya','Cabracho','Calamar','Camarón','Cangrejo de mar','Cangrejo de Río','Carabinero',
+        'Cazón','Cigala','Corvina','Dorada','Esturion','Gamba','Langosta','Langostino','Lenguado','Lubina','Mejillón',
+        'Merluza','Mero','Ostra','Pulpo','Raya','Salmón','Sardina','Trucha','Vieira'
+    ]
+    const pollo = [
+        'Pechuga','Muslo','Pierna','Ala','Contramuslo','Pata','Cuello'
+    ]
+
+    const otros = [
+        'Fideos', 'Arroz', 'Harina', 'Queso', 'Huevos'
+    ]
+
+    return{vegetales, carnesBovinas, carnesPorcinas, pescados, pollo, otros}
 }

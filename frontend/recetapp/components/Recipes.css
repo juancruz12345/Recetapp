@@ -209,6 +209,22 @@
     max-width: 500px;
     margin: 0 auto 1.5rem;
   }
+
+
+  [data-bs-theme=dark]{
+    .recipes-title h1 {
+      color: white !important;
+    }
+    .recipe-title{
+      color: white !important;
+    }
+    .recipe-preview{
+      color: rgb(219, 218, 218);
+    }
+    .meta-item{
+      color: rgb(219, 218, 218);
+    }
+  }
   
   @media (max-width: 768px) {
     .recipes-title h1 {

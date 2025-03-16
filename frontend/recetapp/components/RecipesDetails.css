@@ -247,6 +247,22 @@
     margin-bottom: 1.5rem;
   }
   
+
+  [data-bs-theme=dark]{
+    .ingredients-section{
+      background: #5f6a7e;
+      color: white !important;
+    }
+    .section-title{
+      color: white !important;
+    }
+    .recipe-notes{
+      background: #5f6a7e;
+      color: white !important;
+    }
+  }
+
+
   @media (max-width: 768px) {
     .recipe-header {
       flex-direction: column;

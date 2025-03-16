@@ -340,6 +340,25 @@ app.delete('/recetas/:id', async(req,res)=>{
   }
 })
 
+app.delete('/usuario/:id', async(req,res)=>{
+
+  const {id} = req?.params
+  console.log(id)
+  if(!id){
+    throw new Error('El id del usuario es requerido')
+  }
+
+  try{
+
+    await db.execute("DELETE FROM users WHERE id = ?", [id])
+    res.json({ success: true, message: "usuario eliminado correctamente" })
+
+  }catch(error){
+    console.error('Error al eliminar usuario:', error)
+    res.status(500).json({ message: 'Error interno del servidor.' })
+  }
+})
+
 
 app.post('/logout', (req,res)=>{
     res.clearCookie('acces_token')

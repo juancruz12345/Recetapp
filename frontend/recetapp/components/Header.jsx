@@ -5,23 +5,26 @@ import { Navbar, Nav, Container, Dropdown, Image } from "react-bootstrap"
 import { Link, useLocation } from "react-router-dom"
 import { useToken } from "../services/useToken"
 import { useUserContext } from "../context/UserContext"
-import { Cheff, Bookmark, Logout, User } from './Icons.jsx'
+import { Bookmark, Logout, User } from './Icons.jsx'
 import "./Header.css"
+
 
 export function Header() {
   const { logout } = useToken()
   const location = useLocation()
   const { user } = useUserContext()
+  
   const [expanded, setExpanded] = useState(false)
+ 
 
   const handleNavCollapse = () => setExpanded(false)
-
+  
   return (
     <header className="app-header">
       <Navbar expanded={expanded} expand="lg" className="navbar-custom" variant="dark">
         <Container>
           <Navbar.Brand as={Link} to="/" className="brand">
-            <Image src="./Diseño sin título(2)-Photoroom(1).png" roundedCircle></Image>
+            <Image src="/Diseño sin título(2)-Photoroom(1).png" roundedCircle></Image>
             
            
           </Navbar.Brand>
@@ -53,7 +56,7 @@ export function Header() {
                   <span>{user?.username}</span>
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item onClick={handleNavCollapse}>
+                  <Dropdown.Item as={Link} to={`/usuario/${user?.id}`}>
                   <User size={18} /> 
                     Perfil
                   </Dropdown.Item>

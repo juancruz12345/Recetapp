@@ -1,7 +1,7 @@
 import { useState } from "react"
 import "bootstrap/dist/css/bootstrap.min.css"
 import { Button, Card, Form, Row, Col, Container, Spinner, Alert, Image } from "react-bootstrap"
-import { Carrot, Meat, Cheese, Cheff, Xicon, Fridge, Cooker, Plus } from "./Icons.jsx"
+import { Carrot, Meat, Cheese, Cheff, Xicon, Fridge, Cooker, Plus, ListCheck } from "./Icons.jsx"
 import { Ingredients } from "../services/ingredientes"
 import { Ingredient } from "./Ingredients.jsx"
 import "./Home.css"
@@ -10,6 +10,7 @@ import ToastComponent from "./ToastComponent.jsx"
 import { useUserContext } from "../context/UserContext.jsx"
 import { Header } from "./Header.jsx"
 import { NoUser } from "./NoUser.jsx"
+
 
 
 export function Home(){
@@ -21,7 +22,7 @@ export function Home(){
 
 
   const [selectedCategory, setSelectedCategory] = useState("vegetales")
-  const { vegetales, carnesBovinas, carnesPorcinas } = Ingredients()
+  const { vegetales, carnesBovinas, carnesPorcinas, pescados, pollo, otros } = Ingredients()
   const [ingredients, setIngredients] = useState([])
   const [receta, setReceta] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -29,6 +30,7 @@ export function Home(){
   const [errMsg, setErroMsg] = useState("")
   const [show, setShow] = useState(false)
   const [alert, setAlert] = useState('')
+  const [showModale, setShowModal]= useState(false)
 
   const mapedVegetales = vegetales.map((e) => {
     return (e = { id: e, name: e, type: "Vegetal" })
@@ -38,6 +40,15 @@ export function Home(){
   })
   const mapedCarnesPorcinas = carnesPorcinas.map((e) => {
     return (e = { id: e, name: e, type: "Carne porcina" })
+  })
+  const mapedPescados = pescados.map((e) => {
+    return (e = { id: e, name: e, type: "Pescado" })
+  })
+  const mapedPollo = pollo.map((e) => {
+    return (e = { id: e, name: e, type: "Pollo" })
+  })
+  const mapedOtros = otros.map((e) => {
+    return (e = { id: e, name: e, type: "Otros" })
   })
 
   
@@ -126,10 +137,14 @@ export function Home(){
 
   return (
    <div>
+    
 
     {
       isLoading ?
-      <Spinner style={{display:'flex',margin:'0 auto'}}></Spinner>
+      <div style={{marginTop:'200px', marginBottom:'200px'}}>
+        <Spinner style={{display:'flex',margin:'0 auto'}}></Spinner>
+        <p style={{textAlign:'center', fontWeight:'bold'}}>Cargando usuario...</p>
+      </div>
       :
       <div>
         
@@ -145,7 +160,7 @@ export function Home(){
           <Col lg={4} md={5} sm={12}>
             <Card className="ingredients-selector">
               <Card.Header className="category-header">
-                <h2>Selecciona tus ingredientes</h2>
+                <Fridge></Fridge><h2>Selecciona tus ingredientes</h2>
               </Card.Header>
               <div className="category-tabs">
                 <div
@@ -208,14 +223,52 @@ export function Home(){
                         ))}
                       </div>
                     </div>
+                    <div className="meat-section">
+                      <h3>Pescados y Mariscos</h3>
+                      <div className="meat-grid">
+                        {mapedPescados.map((e) => (
+                          <Ingredient
+                            key={e.id}
+                            name={e.name}
+                            type={e.type}
+                            ingredient={e}
+                            addIngredient={addIngredient}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                    <div className="meat-section">
+                      <h3>Pollo</h3>
+                      <div className="meat-grid">
+                        {mapedPollo.map((e) => (
+                          <Ingredient
+                            key={e.id}
+                            name={e.name}
+                            type={e.type}
+                            ingredient={e}
+                            addIngredient={addIngredient}
+                          />
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 )}
 
                 {selectedCategory === "otros" && (
-                  <div className="coming-soon">
-                    <h3>Próximamente</h3>
-                    <p>Estamos trabajando para agregar más categorías de ingredientes.</p>
-                  </div>
+                  <div>
+                    <div className="meat-grid">
+                        {mapedOtros.map((e) => (
+                          <Ingredient
+                            key={e.id}
+                            name={e.name}
+                            type={e.type}
+                            ingredient={e}
+                            addIngredient={addIngredient}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                 
                 )}
               </Card.Body>
             </Card>
@@ -269,7 +322,7 @@ export function Home(){
             <Form className="selected-ingredients-form" onSubmit={handleSubmit}>
               <Card className="selected-ingredients">
                 <Card.Header className="selected-header">
-                  <Fridge /> <h2>Ingredientes Seleccionados</h2>
+                  <ListCheck></ListCheck> <h2>Ingredientes Seleccionados</h2>
                 </Card.Header>
                 <Card.Body className="selected-body">
                   {ingredients.length > 0 ? (

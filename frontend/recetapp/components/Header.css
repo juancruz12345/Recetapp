@@ -3,10 +3,7 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   }
   
-  .navbar-custom {
-   
-  }
-  
+
   .navbar-custom .navbar-nav .nav-link {
     color: rgba(255, 255, 255, 0.8);
     font-weight: 500;
@@ -38,8 +35,8 @@
   .brand img {
     margin-right: 0.5rem;
     background: #814222;
-   width: 5vw;
-   height: 10vh;
+   width: 4vw;
+   height: 8vh;
   }
   
   .user-dropdown {
