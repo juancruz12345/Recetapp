@@ -1,19 +1,21 @@
 
 
 import { useState } from "react"
-import { Navbar, Nav, Container, Dropdown, Image } from "react-bootstrap"
+import { Navbar, Nav, Container, Dropdown, Image, Button } from "react-bootstrap"
 import { Link, useLocation } from "react-router-dom"
 import { useToken } from "../services/useToken"
 import { useUserContext } from "../context/UserContext"
 import { Bookmark, Logout, User } from './Icons.jsx'
 import "./Header.css"
+import { useThemeContext } from "../context/ThemeContext.jsx"
+import { MoonIcon,SunIcon } from "./Icons.jsx"
 
 
 export function Header() {
   const { logout } = useToken()
   const location = useLocation()
   const { user } = useUserContext()
-  
+  const {theme,toggleTheme} = useThemeContext()
   const [expanded, setExpanded] = useState(false)
  
 
@@ -50,6 +52,11 @@ export function Header() {
               </Nav.Link>
             </Nav>
             <Nav>
+            {
+                    theme==='dark'
+                    ? <div onClick={toggleTheme} className="theme-icon" ><SunIcon></SunIcon></div>
+                    : <div onClick={toggleTheme} className="theme-icon" ><MoonIcon></MoonIcon></div>
+                   }
               <Dropdown align="end">
                 <Dropdown.Toggle id="dropdown-user" className="user-dropdown">
                 <User size={20} /> 

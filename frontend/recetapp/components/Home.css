@@ -4,7 +4,7 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: #f8f9fa;
+    /*background-color: #f8f9fa;*/
     font-family: "Poppins", sans-serif;
   }
   
@@ -33,7 +33,7 @@
   
   .category-tabs {
     display: flex;
-    background-color: #f1f1f1;
+    
     border-bottom: 1px solid #ddd;
   }
   
@@ -283,7 +283,7 @@
   
   .selected-footer {
     padding: 1rem;
-    background-color: #f8f9fa;
+    
   }
   
   .generate-btn {
@@ -357,6 +357,33 @@
   
     .recipe-card {
       margin-top: 1.5rem;
+    }
+  }
+
+  [data-bs-theme=dark]{
+
+    .recipe-card-home{
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .category-tab:hover {
+      background-color: #303030;
+      color: white !important;
+    }
+    
+    .category-tab.active {
+      background: #272b30 !important;
+      border-bottom: 3px solid #ff7e5f;
+      color: #ff7e5f;
+    }
+    .category-tabs{
+      border-bottom: 1px solid #838383;
+    }
+    .meat-section h3{
+      border-bottom: 1px solid #838383;
+      color: white !important;
+    }
+    .selected-item{
+      background: #272b30 !important;
     }
   }
   

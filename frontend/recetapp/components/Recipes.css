@@ -224,6 +224,9 @@
     .meta-item{
       color: rgb(219, 218, 218);
     }
+    .recipe-card{
+      background: #3b3b3b !important;
+    }
   }
   
   @media (max-width: 768px) {

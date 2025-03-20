@@ -360,6 +360,32 @@ app.delete('/usuario/:id', async(req,res)=>{
 })
 
 
+app.put('/usuario/:id', async(req,res)=>{
+  const {username} = req?.body
+  const {id} = req?.params
+  try{
+    const userExist = await db.execute({
+      sql:'SELECT username FROM users WHERE username = :username',
+      args: {username}
+   })
+   if(userExist.rows.length>0){
+    
+    throw new Error('Ya exista una cuenta con ese nombre de usuario.')
+   }
+
+   await db.execute({
+    sql:`UPDATE users SET username = ${username} WHERE id = ?`,
+    args:[id]
+
+   })
+   res.status(200).json({ message: 'Usuario actualizado correctamente.' })
+
+  }catch(e){
+    res.status(500).json({ message: 'Error interno del servidor.' })
+  }
+})
+
+
 app.post('/logout', (req,res)=>{
     res.clearCookie('acces_token')
     res.clearCookie('refresh_token')
