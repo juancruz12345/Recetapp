@@ -370,7 +370,7 @@ app.put('/usuario/:id', async(req,res)=>{
    })
    if(userExist.rows.length>0){
     
-    throw new Error('Ya exista una cuenta con ese nombre de usuario.')
+    throw new Error('Ya existe una cuenta con ese nombre de usuario.')
    }
 
    await db.execute({
