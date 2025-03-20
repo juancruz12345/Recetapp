@@ -15,7 +15,7 @@ export default function User(){
     const handleSubmit= async(e)=>{
 
       e.preventDefault()
-      const response = await fetch(`https://recetapp-8vna.onrender.com/${user.id}`, {
+      const response = await fetch(`https://recetapp-8vna.onrender.com/usuario/${user.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username }), // No es necesario email: email
