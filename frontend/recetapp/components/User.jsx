@@ -22,6 +22,7 @@ export default function User(){
       });
       if (!response.ok) {
         const data = await response.json();
+        console.log(data.message)
         throw new Error(data.message || "Error al actualizar el usuario");
       }
       console.log("usuario actualizado");
@@ -76,8 +77,10 @@ export default function User(){
            <Card style={{padding:'1rem',marginTop:'40px',width:'50vw', justifyContent:'center',boxShadow:'0 4px 12px rgba(0, 0, 0, 0.08)'}}>
                 <Card.Title style={{textAlign:'center', fontWeight:'bolder',fontSize:'1.5rem'}}>Opciones de usuario</Card.Title>
                 <Card.Body style={{display:'flex', flexDirection:'column',gap:'12px'}}>
+                  
                   <Form onSubmit={handleSubmit}>
-                    <Form.Control onChange={handleUpdate} >
+                  <p>{user.username}</p>
+                    <Form.Control style={{marginBottom:'5px', width:'50%'}} onChange={handleUpdate} >
                     </Form.Control>
                     <Button type="submit">Cambiar nombre de usuario</Button>
                   </Form>

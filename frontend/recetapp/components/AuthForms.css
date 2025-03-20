@@ -7,6 +7,7 @@
   }
   
   .auth-card {
+    margin-top: 50px;
     width: 100%;
     max-width: 400px;
     border: none;
@@ -83,6 +84,19 @@
   @media (max-width: 576px) {
     .auth-card {
       margin: 1rem;
+    }
+  }
+
+  [data-bs-theme='dark']{
+    .auth-container{
+      background: #212529 !important;
+    }
+    .auth-card{
+      background: #3b3b3b !important;
+
+      & h2{
+        color: white !important;
+      }
     }
   }
   
