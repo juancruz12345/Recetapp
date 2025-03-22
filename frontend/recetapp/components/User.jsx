@@ -3,7 +3,7 @@ import { Header } from "./Header";
 import { useUserContext } from "../context/UserContext";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Xicon, XCircle, Check } from "./Icons";
+import { Xicon, XCircle, Check, EditIcon } from "./Icons";
 
 
 export default function User(){
@@ -31,23 +31,7 @@ export default function User(){
           }
         }
       )
-      /*const response = await fetch(`https://recetapp-8vna.onrender.com/usuario/${user?.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username }), // No es necesario email: email
-      });
-      if (!response.ok) {
-        const data = await response.json();
-        console.log(data.error)
-        setShow(true)
-        setErrMsg(data.error || "Error al actualizar el usuario")
-        throw new Error(data.message || "Error al actualizar el usuario");
-      }
-      console.log("usuario actualizado");
-      setShow(true)
-      setErrMsg('')
-      return response.json();
-*/
+     
     }
 
 
@@ -104,7 +88,7 @@ export default function User(){
                   <p>{profile?.username}</p>
                     <Form.Control style={{marginBottom:'5px', width:'50%'}} onChange={handleUpdate} >
                     </Form.Control>
-                    <Button type="submit">Cambiar nombre de usuario</Button>
+                    <Button type="submit">Cambiar nombre de usuario <EditIcon/></Button>
                   </Form>
                     <Button variant="danger" onClick={deleteUser} style={{width:'30%', marginTop:'40px'}}>Eliminar usuario <Xicon></Xicon></Button>
                 </Card.Body>

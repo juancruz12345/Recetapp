@@ -328,7 +328,7 @@ app.get('/usuario/:id', async(req,res)=>{
       sql:'SELECT * FROM users WHERE id = ?',
       args:[id]
     })
-    res.json(result.rows)
+    res.json(user.rows)
   }
   catch(e){
     res.status(400).json({ error: e.message }); 
