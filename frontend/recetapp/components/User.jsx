@@ -1,7 +1,7 @@
 import { Alert, Button, Card, Form, ToastContainer, Toast } from "react-bootstrap";
 import { Header } from "./Header";
 import { useUserContext } from "../context/UserContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Xicon, XCircle, Check, EditIcon } from "./Icons";
 
@@ -24,6 +24,10 @@ export default function User(){
           onSuccess: () => {
             setShow(true)
             setErrMsg('')
+            setTimeout(() => {
+              window.location.reload()
+            }, 5000)
+            
           },
           onError: (error) => {
             setShow(true)
@@ -72,6 +76,7 @@ export default function User(){
         }
       }
 
+
     return(
         <div style={{marginBottom:'50vh'}}>
           {
@@ -85,7 +90,7 @@ export default function User(){
                 <Card.Body style={{display:'flex', flexDirection:'column',gap:'12px'}}>
                   
                   <Form onSubmit={handleSubmit}>
-                  <p>{profile?.username}</p>
+                  <strong style={{fontSize:'1.2rem',color:'grey'}}>{profile?.username}</strong>
                     <Form.Control style={{marginBottom:'5px', width:'50%'}} onChange={handleUpdate} >
                     </Form.Control>
                     <Button type="submit">Cambiar nombre de usuario <EditIcon/></Button>
@@ -106,7 +111,7 @@ export default function User(){
                   errMsg !== ''
                   ?
                   <div>
-                    <Toast show={show} onClose={()=>{setShow(false)}} delay={5000} autohide>
+                    <Toast show={show} onClose={()=>{setShow(false)}} delay={3000} autohide>
                   <Toast.Header>
                    <XCircle></XCircle>
                    <strong className="me-auto" style={{marginLeft:'2px'}}>Error</strong>

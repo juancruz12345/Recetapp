@@ -26,7 +26,7 @@ export function UserProvider({ children }) {
       const response = await fetch(`https://recetapp-8vna.onrender.com/usuario/${user?.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username }), 
+        body: JSON.stringify(username), 
       });
   
       if (!response.ok) {
@@ -46,8 +46,10 @@ export function UserProvider({ children }) {
       const response = await fetch(`https://recetapp-8vna.onrender.com/usuario/${user?.id}`, { credentials: "include" });
       if (!response.ok) throw new Error("Error al obtener el perfil");
       console.log('fetch usuario')
+      
       const data = await response.json();
-      return data.user[0];
+      
+      return data[0];
     },
     staleTime: 1000 * 60 * 40, 
     cacheTime: 1000 * 60 * 60,
