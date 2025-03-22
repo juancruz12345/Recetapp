@@ -324,10 +324,10 @@ app.get('/usuario/:id', async(req,res)=>{
   const {id} = req?.params
 
   try{
-    const user = await db.execute({
-      sql:'SELECT * FROM users WHERE id = ?',
-      args:[id]
-    })
+    const user = await db.execute(
+      'SELECT * FROM users WHERE id = ?',[id]
+      
+    )
     res.json(user.rows)
   }
   catch(e){
