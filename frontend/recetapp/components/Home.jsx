@@ -15,11 +15,7 @@ import { NoUser } from "./NoUser.jsx"
 
 export function Home(){
 
-  const {user,isLoading} = useUserContext()
-
-  
-  
-
+  const {user,isLoading, profile} = useUserContext()
 
   const [selectedCategory, setSelectedCategory] = useState("vegetales")
   const { vegetales, carnesBovinas, carnesPorcinas, pescados, pollo, otros } = Ingredients()

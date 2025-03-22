@@ -319,6 +319,23 @@ app.get('/recetas/:user_id', async(req,res)=>{
   }
 })
 
+app.get('/usuario/:id', async(req,res)=>{
+
+  const {id} = req?.params
+
+  try{
+    const user = await db.execute({
+      sql:'SELECT * FROM users WHERE id = ?',
+      args:[id]
+    })
+    res.json(result.rows)
+  }
+  catch(e){
+    res.status(400).json({ error: e.message }); 
+  }
+
+})
+
 
 
 app.delete('/recetas/:id', async(req,res)=>{

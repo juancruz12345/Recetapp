@@ -66,6 +66,10 @@
     background-color: #ffa088;
     border-color: #ffa088;
   }
+  .btn-primary:active{
+    background-color: #fd5b33;
+    
+  }
   
   .alert {
     border-radius: 8px;

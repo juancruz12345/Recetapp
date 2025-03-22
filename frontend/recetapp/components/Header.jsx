@@ -14,7 +14,7 @@ import { MoonIcon,SunIcon } from "./Icons.jsx"
 export function Header() {
   const { logout } = useToken()
   const location = useLocation()
-  const { user } = useUserContext()
+  const { user, profile } = useUserContext()
   const {theme,toggleTheme} = useThemeContext()
   const [expanded, setExpanded] = useState(false)
  
@@ -60,7 +60,7 @@ export function Header() {
               <Dropdown align="end">
                 <Dropdown.Toggle id="dropdown-user" className="user-dropdown">
                 <User size={20} /> 
-                  <span>{user?.username}</span>
+                  <span>{profile?.username}</span>
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                   <Dropdown.Item as={Link} to={`/usuario/${user?.id}`}>
