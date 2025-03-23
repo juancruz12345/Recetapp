@@ -239,7 +239,7 @@ app.post("/receta", async (req, res) => {
         
        const response =await generarTexto(prompt)
       const stringArray = response.split('\n')
-       if(stringArray[0].startsWith('¡Claro!') || stringArray[0].startsWith('¡Aquí tienes') ||stringArray[0].startsWith('Aquí tienes')|| stringArray[0].startsWith('¡Absolutamente') || stringArray[0].startsWith('¡Porsupuesto') || stringArray[0].startsWith('¡Muy bien')){
+       if(stringArray[0].startsWith('¡Claro!') || stringArray[0].startsWith('¡Aquí tienes')||stringArray[0].startsWith('De acuerdo') ||stringArray[0].startsWith('Aquí tienes')|| stringArray[0].startsWith('¡Absolutamente') || stringArray[0].startsWith('¡Porsupuesto') || stringArray[0].startsWith('¡Muy bien')){
         stringArray.shift()
        }
        const receta = stringArray.join('\n').replaceAll('*','')
