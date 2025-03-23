@@ -52,12 +52,14 @@
   
   .recipe-hero {
     position: relative;
+    
   }
   
   .recipe-image {
-    height: 200px;
+    height: 35vh;
     background: #4a6572;
     position: relative;
+    padding: 2rem;
   }
   
   .recipe-image::after {

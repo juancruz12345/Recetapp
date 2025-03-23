@@ -26,7 +26,7 @@ export function Header() {
       <Navbar expanded={expanded} expand="lg" className="navbar-custom" variant="dark">
         <Container>
           <Navbar.Brand as={Link} to="/" className="brand">
-            <Image src="/Diseño sin título(2)-Photoroom(1).png" roundedCircle></Image>
+            <Image src="/Diseño sin título(1)(1).png" roundedCircle></Image>
             
            
           </Navbar.Brand>

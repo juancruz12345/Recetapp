@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Card, Container, Row, Col, Button, Badge, Alert } from "react-bootstrap"
+import { Card, Container, Row, Col, Button, Badge, Alert, Modal } from "react-bootstrap"
 import { useLocation, useParams, useNavigate } from "react-router-dom"
 import {
   Cheff,
@@ -27,7 +27,10 @@ export function RecipesDetails() {
   const { recetas } = location.state || {}
   const [receta, setReceta] = useState(null)
   const [alert, setAlert] = useState(false)
+  const [show,setShow] = useState(false)
   const {user} = useUserContext()
+  const [msg, setMsg] = useState('')
+  const [modal, setModal] = useState('')
 
   useEffect(() => {
     if (recetas) {
@@ -87,17 +90,18 @@ export function RecipesDetails() {
 
       {receta ? (
         <>
+        <ComponentModal show={show} setShow={setShow} shareOnFacebook={shareOnFacebook} deleteRecipe={deleteRecipe} modal={modal}></ComponentModal>
           <div className="recipe-header">
             <Button variant="outline-primary" className="back-button" onClick={() => navigate("/recetas")}>
               <ArrowLeft size={18} /> Volver
             </Button>
             <div className="recipe-actions">
              
-              <Button variant="outline-secondary" className="action-button">
+              <Button variant="outline-secondary" className="action-button" onClick={()=>{setModal('share'), setShow(true)}}>
                 <Share size={18} /> Compartir
               </Button>
-              <button onClick={shareOnFacebook}>Compartir en Facebook</button>
-              <Button onClick={deleteRecipe} variant="outline-danger" className="action-button">
+              
+              <Button onClick={()=>{setModal('delete'), setShow(true)}} variant="outline-danger" className="action-button">
                 <Xicon size={18} /> Eliminar
               </Button>
              
@@ -198,6 +202,40 @@ export function RecipesDetails() {
     : <NoUser></NoUser>
     }
    </div>
+  )
+}
+
+
+
+function ComponentModal({show, setShow, shareOnFacebook, deleteRecipe, modal}){
+
+  return(
+    <Modal show={show} onHide={()=>{setShow(false)}} >
+     {
+      modal === 'share'
+      &&(<div>
+         <Modal.Header  closeButton>¡Comparte la receta en tus redes!</Modal.Header>
+        <Modal.Body style={{display:'flex', justifyContent:'center'}}>
+        <Button onClick={shareOnFacebook}>Compartir en Facebook</Button>
+        </Modal.Body>
+      </div>)
+     }
+     {
+      modal === 'delete'
+      && (
+        <div>
+         <Modal.Header  closeButton>Eliminar receta</Modal.Header>
+        <Modal.Body style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
+        <span>¿Estas seguro que quieres eliminar la receta?</span>
+       <div style={{display:'flex', gap:'5rem', marginTop:'1rem'}}>
+       <Button onClick={()=>{deleteRecipe(), setShow(false)}} variant="primary">Si</Button>
+       <Button onClick={()=>{setShow(false)}} variant="secondary">No</Button>
+       </div>
+        </Modal.Body>
+      </div>
+      )
+     }
+    </Modal>
   )
 }
 

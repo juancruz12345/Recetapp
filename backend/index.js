@@ -231,7 +231,7 @@ app.get("/verify/:email", async (req, res) => {
 app.post("/receta", async (req, res) => {
     const { ingredientes } = req.body;
 
-    const prompt = `Receta de cocina con estos ingredientes: ${ingredientes.join(", ")}. Debe tener el siguiente formato:*Nombre,*Ingredientes(cada ingrediente listado con '-'),*Instrucciones,*Dificultad,*Porciones y *Tiempo de coccion. Quiero que traigas todos los puntos señalados y que la respuesta no supere las 300 palabras`;
+    const prompt = `Receta de cocina con estos ingredientes: ${ingredientes.join(", ")}. Debe tener el siguiente formato:*Nombre,*Ingredientes(cada ingrediente listado con '-'),*Instrucciones,*Dificultad,*Porciones y *Tiempo de coccion. Lo importante es que me des todos los puntos señalados y que la respuesta no supere las 300 palabras(resumida)`;
     
     console.log("Ingredientes recibidos:", ingredientes)
 
