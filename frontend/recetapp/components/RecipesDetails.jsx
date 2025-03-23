@@ -69,6 +69,13 @@ export function RecipesDetails() {
       console.error("Error:", e.message);
     }
   }
+  const actualPath = location.pathname
+
+  const shareOnFacebook = () => {
+    const url = encodeURIComponent(actualPath);
+    const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+    window.open(facebookShareUrl, "_blank");
+  };
 
   return (
    <div>
@@ -89,6 +96,7 @@ export function RecipesDetails() {
               <Button variant="outline-secondary" className="action-button">
                 <Share size={18} /> Compartir
               </Button>
+              <button onClick={shareOnFacebook}>Compartir en Facebook</button>
               <Button onClick={deleteRecipe} variant="outline-danger" className="action-button">
                 <Xicon size={18} /> Eliminar
               </Button>
