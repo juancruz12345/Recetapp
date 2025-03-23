@@ -69,8 +69,8 @@ export function RecipesDetails() {
       console.error("Error:", e.message);
     }
   }
-  const actualPath = location.pathname
-
+  const actualPath = `https://recetapp-pi.vercel.app/${location.pathname}`
+  console.log(actualPath)
   const shareOnFacebook = () => {
     const url = encodeURIComponent(actualPath);
     const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
