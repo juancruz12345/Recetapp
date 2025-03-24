@@ -309,6 +309,10 @@
     padding: 1rem;
     margin-top: 5rem;
   }
+  .btn-primary:active{
+    background-color: #ff5a30;
+  }
+ 
   
   /* Animations */
   @keyframes fadeIn {

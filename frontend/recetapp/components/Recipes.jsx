@@ -59,7 +59,7 @@ export default function Recipes() {
           instructions:e?.recipe.match(/\d+\.\s*.+?(?=\n\d+\.\s|\n*$)/gs),
           
           ingredients:e?.recipe?.split('\n').filter(line => line?.trimStart()?.startsWith('-')).join('\n')?.replaceAll('-','').split('\n'),
-          portions:e?.recipe?.split('\n').filter(e=>e?.includes('Porciones'))?.toString()?.replaceAll('*','')?.replaceAll('-','')
+          portions:e?.recipe?.split('\n').filter(e=>e?.includes('Porciones'))?.toString()?.replaceAll('*','')
           
         })
       })

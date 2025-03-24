@@ -67,7 +67,8 @@
     border-color: #ffa088;
   }
   .btn-primary:active{
-    background-color: #fd5b33;
+    background-color: #ee4318 !important;
+    border-color: #d6512f !important;
     
   }
   

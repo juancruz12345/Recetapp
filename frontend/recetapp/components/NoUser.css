@@ -69,6 +69,7 @@
     font-size: 1.1rem;
     margin-bottom: 1rem;
     color: #4a6572;
+    text-align: center;
   }
   
   .btn-primary {
@@ -81,6 +82,10 @@
     background-color: #ff6a45;
     border-color: #ff6a45;
   }
+  .btn-primary:active{
+    background-color: #ee4318 !important;
+    border-color: #d6512f !important;
+  }
   
   .btn-outline-primary {
     color: #ff7e5f;
@@ -92,6 +97,10 @@
     background-color: #ff7e5f;
     border-color: #ff7e5f;
     color: white;
+  }
+  .btn-outline-primary:active{
+    background-color: #ee4318 !important;
+    border-color: #d6512f !important;
   }
   
   .no-user-footer {
