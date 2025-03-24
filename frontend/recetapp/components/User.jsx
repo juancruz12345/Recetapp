@@ -85,17 +85,21 @@ export default function User(){
            <div>
              <Header></Header>
            <div style={{display:'flex',alignSelf:'center', justifyContent:'center'}}>
-           <Card style={{padding:'1rem',marginTop:'40px',width:'50vw', justifyContent:'center',boxShadow:'0 4px 12px rgba(0, 0, 0, 0.08)'}}>
+           <Card style={{padding:'1rem',marginTop:'40px',width:'50vw', justifyContent:'center',boxShadow:'0 4px 12px rgba(0, 0, 0, 0.08)', border:'none'}}>
                 <Card.Title style={{textAlign:'center', fontWeight:'bolder',fontSize:'1.5rem'}}>Opciones de usuario</Card.Title>
                 <Card.Body style={{display:'flex', flexDirection:'column',gap:'12px'}}>
                   
                   <Form onSubmit={handleSubmit}>
-                  <strong style={{fontSize:'1.2rem',color:'grey'}}>{profile?.username}</strong>
-                    <Form.Control style={{marginBottom:'5px', width:'50%'}} onChange={handleUpdate} >
+                  
+                  <Form.Label>Cambiar nombre de usuario</Form.Label>
+                    <Form.Control style={{marginBottom:'5px',marginTop:'10px', width:'50%'}} onChange={handleUpdate} >
                     </Form.Control>
-                    <Button type="submit">Cambiar nombre de usuario <EditIcon/></Button>
+                    <Button type="submit">Cambiar <EditIcon/></Button>
                   </Form>
-                    <Button variant="danger" onClick={deleteUser} style={{width:'30%', marginTop:'40px'}}>Eliminar usuario <Xicon></Xicon></Button>
+                 <div style={{marginTop:'20vh', display:'flex', flexDirection:'column'}}>
+                 <Form.Label>Eliminar usuario</Form.Label>
+                 <Button variant="danger" onClick={deleteUser} style={{width:'fit-content'}}>Eliminar <Xicon></Xicon></Button>
+                 </div>
                 </Card.Body>
                 {
                     alert && (

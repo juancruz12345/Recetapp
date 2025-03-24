@@ -96,7 +96,7 @@ export function SignUp() {
 
 
   return (
-    <Container className="auth-container">
+    <Container className="auth-container" fluid>
       <Card className="auth-card">
         <Card.Body>
           <h2 className="text-center mb-4">Registro</h2>

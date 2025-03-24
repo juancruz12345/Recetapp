@@ -8,6 +8,7 @@ import { RecipesDetails } from "../components/RecipesDetails"
 import { VerifyAccount } from "../components/VerifyAccount"
 import  User  from "../components/User"
 import { useThemeContext } from "../context/ThemeContext"
+import './App.css'
 
 function App() {
 

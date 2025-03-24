@@ -1,0 +1,10 @@
+body{
+    background-color: #f8f9fa !important;
+}
+
+[data-bs-theme=dark]{
+    body{
+        background: #212529 !important;
+        
+    }
+}

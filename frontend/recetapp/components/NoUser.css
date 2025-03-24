@@ -131,10 +131,13 @@
   [data-bs-theme=dark]{
     
     .no-user-page{
-      background: #3b3b3b !important;
+      background: #212529 !important;
     }
     .welcome-card .card-title {
       color: #c4c4c4;
+    }
+    .welcome-card {
+      background: #3b3b3b !important;
     }
   }
   

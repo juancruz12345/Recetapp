@@ -368,8 +368,18 @@
 
   [data-bs-theme=dark]{
 
+    .ingredients-selector{
+      background: #3b3b3b !important;
+    }
     .recipe-card-home{
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      background: #3b3b3b !important;
+    }
+    .recipe-result h3{
+      color: white !important;
+    }
+    .selected-ingredients{
+      background: #3b3b3b !important;
     }
     .category-tab:hover {
       background-color: #303030;

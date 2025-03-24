@@ -66,7 +66,7 @@ export function Login() {
   }
 
   return (
-    <Container className="auth-container">
+    <Container className="auth-container" fluid>
       <Card className="auth-card">
         <Card.Body>
           <h2 className="text-center mb-4">Iniciar Sesión</h2>
